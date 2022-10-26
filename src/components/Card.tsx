@@ -19,8 +19,8 @@ const Card: React.FC<CardProps> = ({
 }) => {
   const [drag, setDrag] = useState({
     active: false,
-    x: "",
-    y: "",
+    x: NaN,
+    y: NaN,
   });
 
   const boxStyle = {
@@ -28,7 +28,7 @@ const Card: React.FC<CardProps> = ({
     height: `${item.y}px`,
   };
 
-  const startResize = (e) => {
+  const startResize = (e :React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setIsUpdating(true);
     setDrag({
       active: true,
@@ -37,13 +37,13 @@ const Card: React.FC<CardProps> = ({
     });
   };
 
-  const resizeFrame = (e) => {
+  const resizeFrame = (e :React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const { active, x, y } = drag;
     if (active) {
       const xDiff = Math.abs(+x - e.clientX);
       const yDiff = Math.abs(+y - e.clientY);
-      const newW: number = x > e.clientX ? item.x - xDiff : item.x + xDiff;
-      const newH: number = y < e.clientY ? item.y + yDiff : item.y - yDiff;
+      const newW: number = +x > e.clientX ? item.x - xDiff : item.x + xDiff;
+      const newH: number = +y < e.clientY ? item.y + yDiff : item.y - yDiff;
 
       setDrag({ ...drag, x: e.clientX, y: e.clientY });
       setCoordinates({ w: newW, h: newH });
