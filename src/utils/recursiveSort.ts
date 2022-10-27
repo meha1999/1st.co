@@ -1,8 +1,8 @@
-const recursiveSort = (object :any) =>
+const recursiveSort = (object: Record<string, any>) =>
   Object.keys(object)
     .sort()
-    .reduce((obj :any, key) => {
-      obj[key]  =
+    .reduce((obj: Record<string, any>, key) => {
+      obj[key] =
         typeof object[key] === "object"
           ? recursiveSort(object[key])
           : object[key];
